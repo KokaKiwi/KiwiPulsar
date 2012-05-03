@@ -42,11 +42,6 @@ public class PulsarLogger
         {
             e.printStackTrace();
         }
-        
-        info("", true);
-        info("===============================================================================",
-                true);
-        info("", true);
     }
     
     public static void info(String line, boolean data)
