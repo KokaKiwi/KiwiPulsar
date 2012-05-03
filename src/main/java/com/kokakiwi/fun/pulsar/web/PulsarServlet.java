@@ -19,7 +19,7 @@ public class PulsarServlet extends HttpServlet
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
     {
-        if (!StaticPages.handle(req, resp))
+        if (!StaticPages.handle(req, resp) && !DynamicPages.handle(req, resp))
         {
             resp.setStatus(404);
             StaticPages.show("special/notfound.html", resp);

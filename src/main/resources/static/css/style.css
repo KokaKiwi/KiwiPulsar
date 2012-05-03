@@ -1,3 +1,11 @@
+html
+{
+    display: block;
+    font-family: monospace;
+    white-space: pre;
+    margin: 1em 0px;
+}
+
 div.footer
 {
     text-align: center;

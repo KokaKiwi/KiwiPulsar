@@ -7,4 +7,6 @@ public interface IDataListener
     public void onPower(double power);
     
     public void onData(String[] datas);
+    
+    public void onLine(String line);
 }

@@ -1,13 +1,12 @@
 package com.kokakiwi.fun.pulsar.web;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
+import com.kokakiwi.fun.pulsar.web.utils.WebUtils;
 
 public class StaticPages
 {
@@ -38,7 +37,7 @@ public class StaticPages
                 }
                 else
                 {
-                    send("static/" + request, resp);
+                    WebUtils.send("static/" + request, resp);
                     handled = true;
                 }
             }
@@ -50,16 +49,9 @@ public class StaticPages
     public static void show(String page, HttpServletResponse resp)
             throws IOException
     {
-        send("special/header.html", resp);
-        send(page, resp);
-        send("special/footer.html", resp);
-    }
-    
-    public static void send(String file, HttpServletResponse resp)
-            throws IOException
-    {
-        InputStream in = StaticPages.class.getResourceAsStream("/" + file);
-        IOUtils.copy(in, resp.getOutputStream());
+        WebUtils.send("special/header.html", resp);
+        WebUtils.send(page, resp);
+        WebUtils.send("special/footer.html", resp);
     }
     
     public static boolean test(String file)

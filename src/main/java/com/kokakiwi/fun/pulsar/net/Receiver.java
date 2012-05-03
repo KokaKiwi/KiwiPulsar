@@ -140,5 +140,10 @@ public class Receiver implements Runnable
             
         }
         
+        public void onLine(String line)
+        {
+            
+        }
+        
     }
 }

@@ -1,8 +1,6 @@
 package com.kokakiwi.fun.pulsar.logger;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
@@ -30,14 +28,8 @@ public class PulsarLogger
         
         try
         {
-            Date date = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("d-M-y-H-m");
-            String d = dateFormat.format(date);
-            
-            FileHandler logFileHandler = new FileHandler("session-" + d
-                    + ".log", true);
-            FileHandler dataFileHandler = new FileHandler("data-" + d + ".log",
-                    true);
+            FileHandler logFileHandler = new FileHandler("session.log");
+            FileHandler dataFileHandler = new FileHandler("data.log");
             
             PulsarLoggerFormatter formatter = new PulsarLoggerFormatter();
             logFileHandler.setFormatter(formatter);
