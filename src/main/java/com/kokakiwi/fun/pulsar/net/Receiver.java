@@ -31,10 +31,7 @@ public class Receiver implements Runnable
     {
         try
         {
-            URL url = new URL(URL);
-            connection = url.openConnection();
-            
-            in = connection.getInputStream();
+            openConnection();
         }
         catch (IOException e)
         {
@@ -78,12 +75,24 @@ public class Receiver implements Runnable
                     }
                     PulsarLogger.info(line, data);
                 }
+                else
+                {
+                    openConnection();
+                }
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
         }
+    }
+    
+    public void openConnection() throws IOException
+    {
+        URL url = new URL(URL);
+        connection = url.openConnection();
+        
+        in = connection.getInputStream();
     }
     
     public void start()
