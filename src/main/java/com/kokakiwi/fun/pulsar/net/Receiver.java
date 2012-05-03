@@ -26,6 +26,7 @@ public class Receiver implements Runnable
     private boolean                   listening             = false;
     private URLConnection             connection;
     private InputStream               in;
+    private BufferedReader            reader;
     
     private final List<IDataListener> listeners             = Lists.newLinkedList();
     private final IDataListener       listener;
@@ -46,7 +47,6 @@ public class Receiver implements Runnable
     
     public void run()
     {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         listening = true;
         
         while (listening)
@@ -99,6 +99,7 @@ public class Receiver implements Runnable
         connection = url.openConnection();
         
         in = connection.getInputStream();
+        reader = new BufferedReader(new InputStreamReader(in));
     }
     
     public void start()
