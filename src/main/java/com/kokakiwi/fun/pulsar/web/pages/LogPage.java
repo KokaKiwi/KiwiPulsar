@@ -17,7 +17,7 @@ public class LogPage implements DynamicPage
     public boolean handle(HttpServletRequest req, HttpServletResponse resp,
             List<String> params) throws IOException
     {
-        boolean handled = false;
+        boolean handled = true;
         
         File file = new File("session.log");
         InputStream in = new FileInputStream(file);
