@@ -24,16 +24,22 @@ public class StaticPages
         }
         else
         {
-            if (test("static/" + request))
+            if (request.endsWith(".html") && test("static/" + request))
             {
                 show("static/" + request, resp);
                 handled = true;
             }
-            else if (!request.endsWith(".html")
-                    && test("static/" + request + ".html"))
+            else
             {
-                show("static/" + request + ".html", resp);
-                handled = true;
+                if (test("static/" + request + ".html"))
+                {
+                    show("static/" + request + ".html", resp);
+                    handled = true;
+                }
+                else
+                {
+                    send("static/" + request, resp);
+                }
             }
         }
         
