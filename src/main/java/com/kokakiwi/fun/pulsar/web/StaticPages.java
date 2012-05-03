@@ -35,7 +35,7 @@ public class StaticPages
                     show("static/" + request + ".html", resp);
                     handled = true;
                 }
-                else
+                else if (test("static/" + request))
                 {
                     WebUtils.send("static/" + request, resp);
                     handled = true;
