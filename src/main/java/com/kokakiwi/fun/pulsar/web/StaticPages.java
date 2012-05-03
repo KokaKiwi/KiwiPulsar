@@ -39,6 +39,7 @@ public class StaticPages
                 else
                 {
                     send("static/" + request, resp);
+                    handled = true;
                 }
             }
         }
