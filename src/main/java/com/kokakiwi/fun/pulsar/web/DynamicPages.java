@@ -22,6 +22,7 @@ public class DynamicPages
     {
         register("log", new LogPage());
         register("data", new DataPage());
+        register("raw", new RawDataPage());
     }
     
     public static void register(String regex, IDynamicPage page)
