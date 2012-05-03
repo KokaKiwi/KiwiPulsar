@@ -6,8 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface DynamicPage
+public interface IDynamicPage
 {
-    public boolean handle(HttpServletRequest req, HttpServletResponse resp,
-            List<String> params) throws IOException;
+    public boolean handle(PulsarServlet servlet, HttpServletRequest req,
+            HttpServletResponse resp, List<String> params) throws IOException;
 }

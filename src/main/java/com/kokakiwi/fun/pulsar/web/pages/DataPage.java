@@ -13,17 +13,17 @@ import com.kokakiwi.fun.pulsar.web.IDynamicPage;
 import com.kokakiwi.fun.pulsar.web.PulsarServlet;
 import com.kokakiwi.fun.pulsar.web.utils.WebUtils;
 
-public class LogPage implements IDynamicPage
+public class DataPage implements IDynamicPage
 {
+    
     public boolean handle(PulsarServlet servlet, HttpServletRequest req,
             HttpServletResponse resp, List<String> params) throws IOException
     {
-        boolean handled = true;
-        
-        File file = new File("session.log");
+        File file = new File("data.log");
         InputStream in = new FileInputStream(file);
         WebUtils.send(in, resp);
         
-        return handled;
+        return true;
     }
+    
 }

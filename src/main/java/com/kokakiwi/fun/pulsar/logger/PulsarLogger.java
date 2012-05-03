@@ -28,8 +28,8 @@ public class PulsarLogger
         
         try
         {
-            FileHandler logFileHandler = new FileHandler("session.log");
-            FileHandler dataFileHandler = new FileHandler("data.log");
+            FileHandler logFileHandler = new FileHandler("session.log", true);
+            FileHandler dataFileHandler = new FileHandler("data.log", true);
             
             PulsarLoggerFormatter formatter = new PulsarLoggerFormatter();
             logFileHandler.setFormatter(formatter);
@@ -42,6 +42,11 @@ public class PulsarLogger
         {
             e.printStackTrace();
         }
+        
+        info("", true);
+        info("===============================================================================",
+                true);
+        info("", true);
     }
     
     public static void info(String line, boolean data)

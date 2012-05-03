@@ -12,23 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.kokakiwi.fun.pulsar.web.pages.LogPage;
+import com.kokakiwi.fun.pulsar.web.pages.*;
 
 public class DynamicPages
 {
-    private final static Map<String, DynamicPage> pages = Maps.newLinkedHashMap();
+    private final static Map<String, IDynamicPage> pages = Maps.newLinkedHashMap();
     
     static
     {
         register("log", new LogPage());
+        register("data", new DataPage());
     }
     
-    public static void register(String regex, DynamicPage page)
+    public static void register(String regex, IDynamicPage page)
     {
         pages.put(regex, page);
     }
     
-    public static boolean handle(HttpServletRequest req,
+    public static boolean handle(PulsarServlet servlet, HttpServletRequest req,
             HttpServletResponse resp) throws ServletException, IOException
     {
         boolean handled = false;
@@ -39,13 +40,13 @@ public class DynamicPages
             Matcher matcher = Pattern.compile(regex).matcher(request);
             if (matcher.find())
             {
-                DynamicPage page = pages.get(regex);
+                IDynamicPage page = pages.get(regex);
                 List<String> params = Lists.newLinkedList();
                 for (int i = 0; i < matcher.groupCount(); i++)
                 {
                     params.add(matcher.group(i + 1));
                 }
-                if (page.handle(req, resp, params))
+                if (page.handle(servlet, req, resp, params))
                 {
                     handled = true;
                     break;
