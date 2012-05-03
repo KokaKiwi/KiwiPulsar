@@ -13,14 +13,14 @@ public class PulsarWeb
     
     public PulsarWeb()
     {
+        receiver = new Receiver();
+        
         server = new Server(Integer.valueOf(System.getenv("PORT")));
         ServletContextHandler context = new ServletContextHandler(
                 ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         server.setHandler(context);
         context.addServlet(new ServletHolder(new PulsarServlet(this)), "/*");
-        
-        receiver = new Receiver();
     }
     
     public void start() throws Exception
