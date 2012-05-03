@@ -1,1 +1,1 @@
-web:    java -cp target/classes:target/dependency/* com.kokakiwi.fun.pulsar.web.PulsarWeb
+web: java -cp target/classes:target/dependency/* com.kokakiwi.fun.pulsar.web.PulsarWeb
