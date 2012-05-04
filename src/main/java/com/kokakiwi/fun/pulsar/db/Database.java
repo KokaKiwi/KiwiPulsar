@@ -28,6 +28,7 @@ public class Database
         sourceConfig.setUsername(username);
         sourceConfig.setUrl(dbUrl);
         sourceConfig.setPassword(password);
+        sourceConfig.setDriver("org.postgresql.Driver");
         
         config.setDataSourceConfig(sourceConfig);
         server = EbeanServerFactory.create(config);
