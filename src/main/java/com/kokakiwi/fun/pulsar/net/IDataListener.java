@@ -8,5 +8,12 @@ public interface IDataListener
     
     public void onData(String[] datas);
     
-    public void onLine(String line);
+    public void onOther(String line);
+    
+    public void onLine(Type type, String line);
+    
+    public static enum Type
+    {
+        INFOS, POWER, DATA, OTHER;
+    }
 }

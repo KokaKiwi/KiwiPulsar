@@ -1,45 +1,91 @@
 package com.kokakiwi.fun.pulsar.db;
 
-import java.net.URI;
 import java.util.List;
 
 import com.avaje.ebean.EbeanServer;
-import com.avaje.ebean.EbeanServerFactory;
-import com.avaje.ebean.config.DataSourceConfig;
-import com.avaje.ebean.config.ServerConfig;
+import com.avaje.ebeaninternal.api.SpiEbeanServer;
+import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
 import com.google.common.collect.Lists;
+import com.kokakiwi.fun.pulsar.db.config.LocalPostgreSQLConfigurator;
+import com.kokakiwi.fun.pulsar.db.config.RemoteMySQLConfigurator;
+import com.kokakiwi.fun.pulsar.net.IDataListener;
+import com.kokakiwi.fun.pulsar.web.PulsarWeb;
 
-public class Database
+public class Database implements IDataListener
 {
-    private final EbeanServer server;
+    public final static IDatabaseConfigurator CONFIGURATOR = new RemoteMySQLConfigurator();
     
-    public Database() throws Exception
+    private final PulsarWeb                   main;
+    private final SpiEbeanServer              server;
+    
+    public Database(PulsarWeb main) throws Exception
     {
-        ServerConfig config = new ServerConfig();
-        config.setName("PulsarDatabase");
-        config.setClasses(getClasses());
+        this.main = main;
         
-        DataSourceConfig sourceConfig = new DataSourceConfig();
+        server = (SpiEbeanServer) CONFIGURATOR.create(getClasses());
         
-        URI uri = new URI(System.getenv("DATABASE_URL"));
-        System.out.println("[DEBUG] " + System.getenv("DATABASE_URL"));
-        
-        String username = uri.getUserInfo().split(":")[0];
-        String password = uri.getUserInfo().split(":")[1];
-        
-        String dbUrl = "jdbc:postgresql://" + uri.getHost() + uri.getPath();
-        
-        sourceConfig.setUsername(username);
-        sourceConfig.setUrl(dbUrl);
-        sourceConfig.setPassword(password);
-        sourceConfig.setDriver("org.postgresql.Driver");
-        
-        config.setDataSourceConfig(sourceConfig);
-        server = EbeanServerFactory.create(config);
+        createTables();
+        register();
+    }
+    
+    private void register()
+    {
+        main.getReceiver().addListener(this);
+    }
+    
+    private void createTables()
+    {
+        try
+        {
+            server.find(PulsarEntry.class).findRowCount();
+        }
+        catch (Exception e)
+        {
+            DdlGenerator generator = server.getDdlGenerator();
+            generator.runScript(false, generator.generateCreateDdl());
+        }
     }
     
     private List<Class<?>> getClasses()
     {
-        return Lists.newLinkedList();
+        List<Class<?>> classes = Lists.newLinkedList();
+        
+        classes.add(PulsarEntry.class);
+        
+        return classes;
+    }
+    
+    public EbeanServer getServer()
+    {
+        return server;
+    }
+    
+    public void onInfos(String name, double value)
+    {
+        
+    }
+    
+    public void onPower(double power)
+    {
+        
+    }
+    
+    public void onData(String[] datas)
+    {
+        
+    }
+    
+    public void onOther(String line)
+    {
+        
+    }
+    
+    public void onLine(IDataListener.Type type, String line)
+    {
+        PulsarEntry entry = new PulsarEntry();
+        entry.setType(type);
+        entry.setLine(line);
+        
+        server.save(entry);
     }
 }

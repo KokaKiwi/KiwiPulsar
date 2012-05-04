@@ -57,6 +57,7 @@ public class Receiver implements Runnable
                 if (line != null)
                 {
                     boolean data = false;
+                    IDataListener.Type type = IDataListener.Type.OTHER;
                     Matcher matcher;
                     if ((matcher = SCANNER_INFOS_PATTERN.matcher(line)).find())
                     {
@@ -64,12 +65,14 @@ public class Receiver implements Runnable
                         double value = Double.parseDouble(matcher.group(2));
                         
                         listener.onInfos(name, value);
+                        type = IDataListener.Type.INFOS;
                     }
                     else if ((matcher = POWER_PATTERN.matcher(line)).find())
                     {
                         double power = Double.parseDouble(matcher.group(1));
                         
                         listener.onPower(power);
+                        type = IDataListener.Type.POWER;
                     }
                     else if ((matcher = DATA_PATTERN.matcher(line)).find())
                     {
@@ -77,8 +80,13 @@ public class Receiver implements Runnable
                         String[] datas = line.split(" ");
                         
                         listener.onData(datas);
+                        type = IDataListener.Type.DATA;
                     }
-                    listener.onLine(line);
+                    else
+                    {
+                        listener.onOther(line);
+                    }
+                    listener.onLine(type, line);
                     PulsarLogger.info(line, data);
                 }
                 else
@@ -171,11 +179,19 @@ public class Receiver implements Runnable
             }
         }
         
-        public void onLine(String line)
+        public void onLine(IDataListener.Type type, String line)
         {
             for (IDataListener l : receiver.getListeners())
             {
-                l.onLine(line);
+                l.onLine(type, line);
+            }
+        }
+        
+        public void onOther(String line)
+        {
+            for (IDataListener l : receiver.getListeners())
+            {
+                l.onOther(line);
             }
         }
         

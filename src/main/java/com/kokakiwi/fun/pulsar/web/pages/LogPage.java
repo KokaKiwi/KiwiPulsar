@@ -1,17 +1,14 @@
 package com.kokakiwi.fun.pulsar.web.pages;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kokakiwi.fun.pulsar.db.PulsarEntry;
 import com.kokakiwi.fun.pulsar.web.IDynamicPage;
 import com.kokakiwi.fun.pulsar.web.PulsarServlet;
-import com.kokakiwi.fun.pulsar.web.utils.WebUtils;
 
 public class LogPage implements IDynamicPage
 {
@@ -20,9 +17,16 @@ public class LogPage implements IDynamicPage
     {
         boolean handled = true;
         
-        File file = new File("session.log");
-        InputStream in = new FileInputStream(file);
-        WebUtils.send(in, resp);
+        StringBuilder sb = new StringBuilder();
+        List<PulsarEntry> entries = servlet.getMain().getDatabase().getServer()
+                .find(PulsarEntry.class).findList();
+        for (PulsarEntry entry : entries)
+        {
+            sb.append(entry.getLine());
+            sb.append('\n');
+        }
+        
+        resp.getWriter().print(sb);
         
         return handled;
     }

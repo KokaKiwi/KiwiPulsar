@@ -16,7 +16,7 @@ public class PulsarWeb
     public PulsarWeb() throws Exception
     {
         receiver = new Receiver();
-        database = new Database();
+        database = new Database(this);
         
         server = new Server(Integer.valueOf(System.getenv("PORT")));
         ServletContextHandler context = new ServletContextHandler(
@@ -47,6 +47,11 @@ public class PulsarWeb
     public Receiver getReceiver()
     {
         return receiver;
+    }
+    
+    public Database getDatabase()
+    {
+        return database;
     }
     
     public static void main(String[] args)
