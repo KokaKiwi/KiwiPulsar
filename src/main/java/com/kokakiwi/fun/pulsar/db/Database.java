@@ -14,6 +14,8 @@ public class Database
     public Database() throws Exception
     {
         ServerConfig config = new ServerConfig();
+        config.setName("PulsarDatabase");
+        
         DataSourceConfig sourceConfig = new DataSourceConfig();
         
         URI uri = new URI(System.getenv("DATABASE_URL"));
