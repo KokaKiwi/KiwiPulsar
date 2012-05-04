@@ -1,11 +1,13 @@
 package com.kokakiwi.fun.pulsar.db;
 
 import java.net.URI;
+import java.util.List;
 
 import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.DataSourceConfig;
 import com.avaje.ebean.config.ServerConfig;
+import com.google.common.collect.Lists;
 
 public class Database
 {
@@ -15,6 +17,7 @@ public class Database
     {
         ServerConfig config = new ServerConfig();
         config.setName("PulsarDatabase");
+        config.setClasses(getClasses());
         
         DataSourceConfig sourceConfig = new DataSourceConfig();
         
@@ -32,5 +35,10 @@ public class Database
         
         config.setDataSourceConfig(sourceConfig);
         server = EbeanServerFactory.create(config);
+    }
+    
+    private List<Class<?>> getClasses()
+    {
+        return Lists.newLinkedList();
     }
 }
