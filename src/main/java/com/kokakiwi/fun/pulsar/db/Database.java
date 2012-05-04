@@ -7,13 +7,12 @@ import com.avaje.ebeaninternal.api.SpiEbeanServer;
 import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
 import com.google.common.collect.Lists;
 import com.kokakiwi.fun.pulsar.db.config.LocalPostgreSQLConfigurator;
-import com.kokakiwi.fun.pulsar.db.config.RemoteMySQLConfigurator;
 import com.kokakiwi.fun.pulsar.net.IDataListener;
 import com.kokakiwi.fun.pulsar.web.PulsarWeb;
 
 public class Database implements IDataListener
 {
-    public final static IDatabaseConfigurator CONFIGURATOR = new RemoteMySQLConfigurator();
+    public final static IDatabaseConfigurator CONFIGURATOR = new LocalPostgreSQLConfigurator();
     
     private final PulsarWeb                   main;
     private final SpiEbeanServer              server;
