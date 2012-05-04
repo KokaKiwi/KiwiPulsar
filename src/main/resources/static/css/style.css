@@ -2,12 +2,23 @@ html
 {
     display: block;
     font-family: monospace;
-    white-space: pre;
     margin: 1em 0px;
+}
+
+a:link, a:visited
+{
+    text-decoration: none;
+}
+
+div#main
+{
+    text-align: center;
+    margin-top: 15px;
 }
 
 div.footer
 {
+    margin-top: 20px;
     text-align: center;
-    font-size: 0.8em;
+    font-size: 0.9em;
 }
