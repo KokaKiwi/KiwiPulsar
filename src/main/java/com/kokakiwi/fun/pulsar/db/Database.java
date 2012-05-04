@@ -22,6 +22,7 @@ public class Database
         DataSourceConfig sourceConfig = new DataSourceConfig();
         
         URI uri = new URI(System.getenv("DATABASE_URL"));
+        System.out.println("[DEBUG] " + System.getenv("DATABASE_URL"));
         
         String username = uri.getUserInfo().split(":")[0];
         String password = uri.getUserInfo().split(":")[1];
