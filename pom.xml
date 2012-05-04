@@ -31,6 +31,11 @@
 			<artifactId>roma-chart-jfreechart</artifactId>
 			<version>3.0.0-BETA</version>
 		</dependency>
+		<dependency>
+			<groupId>org.avaje</groupId>
+			<artifactId>ebean</artifactId>
+			<version>2.7.5</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>pulsar-receiver</finalName>

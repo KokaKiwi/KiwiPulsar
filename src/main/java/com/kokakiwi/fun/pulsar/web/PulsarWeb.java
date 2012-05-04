@@ -4,16 +4,19 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import com.kokakiwi.fun.pulsar.db.Database;
 import com.kokakiwi.fun.pulsar.net.Receiver;
 
 public class PulsarWeb
 {
     private final Server   server;
     private final Receiver receiver;
+    private final Database database;
     
-    public PulsarWeb()
+    public PulsarWeb() throws Exception
     {
         receiver = new Receiver();
+        database = new Database();
         
         server = new Server(Integer.valueOf(System.getenv("PORT")));
         ServletContextHandler context = new ServletContextHandler(
